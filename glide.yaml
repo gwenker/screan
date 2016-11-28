@@ -1,0 +1,6 @@
+package: github.com/gwenker/screan
+import:
+- package: github.com/labstack/echo
+  version: v3.0.2
+- package: github.com/labstack/gommon
+  version: v0.1.0
