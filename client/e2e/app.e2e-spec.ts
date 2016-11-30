@@ -1,3 +1,4 @@
+import {} from 'jasmine';
 import { ClientPage } from './app.po';
 
 describe('client App', function() {
