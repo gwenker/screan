@@ -2,7 +2,8 @@ package server
 
 import (
 	"net/http"
-
+	"strconv"
+	
 	"github.com/labstack/echo"
 )
 
@@ -11,7 +12,7 @@ type Banana struct {
 }
 
 // Start Start server
-func Start() {
+func Start(port int) {
 	e := echo.New()
 	e.Debug = true
 	e.POST("/", func(c echo.Context) error {
@@ -20,5 +21,5 @@ func Start() {
 
 		return c.JSON(http.StatusOK, data)
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":"+strconv.Itoa(port)))
 }
