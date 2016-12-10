@@ -1,25 +1,19 @@
 package server
 
 import (
-	"net/http"
 	"strconv"
-	
+
+	"github.com/gwenker/screan/server/sprint"
 	"github.com/labstack/echo"
 )
-
-type Banana struct {
-	One string `json:"one,omitempty"`
-}
 
 // Start Start server
 func Start(port int) {
 	e := echo.New()
 	e.Debug = true
-	e.POST("/", func(c echo.Context) error {
-		var data Banana
-		c.Bind(&data)
+	e.POST("/sprints", sprint.CreateSprint)
+	e.GET("/sprints", sprint.GetSprints)
+	e.GET("/sprints/:id", sprint.GetSprint)
 
-		return c.JSON(http.StatusOK, data)
-	})
-	e.Logger.Fatal(e.Start(":"+strconv.Itoa(port)))
+	e.Logger.Fatal(e.Start(":" + strconv.Itoa(port)))
 }
