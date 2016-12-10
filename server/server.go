@@ -3,6 +3,8 @@ package server
 import (
 	"strconv"
 
+	mgo "gopkg.in/mgo.v2"
+
 	"github.com/gwenker/screan/server/sprint"
 	"github.com/labstack/echo"
 )
@@ -11,9 +13,31 @@ import (
 func Start(port int) {
 	e := echo.New()
 	e.Debug = true
-	e.POST("/sprints", sprint.CreateSprint)
-	e.GET("/sprints", sprint.GetSprints)
-	e.GET("/sprints/:id", sprint.GetSprint)
 
+	// Get mongodb session
+	ms := getSession()
+	defer ms.Close()
+
+	// Get a SprintController instance
+	sc := sprint.New(ms)
+
+	// routes
+	e.POST("/sprints", sc.CreateSprint)
+	e.GET("/sprints", sc.GetSprints)
+	e.GET("/sprints/:id", sc.GetSprint)
+
+	// start echo server
 	e.Logger.Fatal(e.Start(":" + strconv.Itoa(port)))
+}
+
+// get mongodb session
+func getSession() *mgo.Session {
+	// Connect to local mongo
+	session, err := mgo.Dial("mongodb://localhost")
+
+	// Check if connection error, is mongo running?
+	if err != nil {
+		panic(err)
+	}
+	return session
 }
