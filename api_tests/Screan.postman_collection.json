@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "Screan",
-		"_postman_id": "9c84795b-346e-34dd-049a-1ae0d81a1256",
+		"_postman_id": "682a0560-53d6-3423-c05f-e3b2034ab816",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -125,7 +125,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Sprints",
+					"name": "PUT Sprint",
 					"event": [
 						{
 							"listen": "test",
@@ -139,12 +139,18 @@
 						}
 					],
 					"request": {
-						"url": "http://{{uri}}/sprints",
-						"method": "GET",
-						"header": [],
+						"url": "http://{{uri}}/sprints/{{id}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": []
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{id}}\",\n  \"name\": \"Sprint 1\",\n  \"startDate\": \"2016-12-10T00:00:00.000Z\",\n  \"endDate\": \"2016-12-25T00:00:00.000Z\",\n  \"capacity\": 10\n  \"planning\": [\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t},\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t}\n  \t]\n}"
 						},
 						"description": ""
 					},

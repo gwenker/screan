@@ -11,23 +11,25 @@ import (
 	"github.com/labstack/echo"
 )
 
-type SprintController struct {
+// Controller Sprint struct
+type Controller struct {
 	session *mgo.Session
 }
 
-func New(s *mgo.Session) *SprintController {
-	return &SprintController{s}
+// New create a new sprint controller
+func New(s *mgo.Session) *Controller {
+	return &Controller{s}
 }
 
-// e.POST("/sprints", CreateSprint)
-func (sc SprintController) CreateSprint(c echo.Context) error {
+// CreateSprint e.POST("/sprints", CreateSprint)
+func (sc Controller) CreateSprint(c echo.Context) error {
 	s := new(models.Sprint)
 	// Bind
 	if err := c.Bind(s); err != nil {
 		return err
 	}
 	// Add an Id
-	s.Id = bson.NewObjectId()
+	s.ID = bson.NewObjectId()
 	// Add creation date
 	s.Created = time.Now()
 	// Write the sprint to mongo
@@ -36,8 +38,8 @@ func (sc SprintController) CreateSprint(c echo.Context) error {
 	return c.JSON(http.StatusCreated, s)
 }
 
-// e.GET("/sprints", GetSprints)
-func (sc SprintController) GetSprints(c echo.Context) error {
+// GetSprints e.GET("/sprints", GetSprints)
+func (sc Controller) GetSprints(c echo.Context) error {
 	var s []models.Sprint
 	// Find Sprint By Id
 	if err := sc.session.DB("screandb").C("sprints").Find(nil).Limit(10).Sort("-created").All(&s); err != nil {
@@ -47,8 +49,8 @@ func (sc SprintController) GetSprints(c echo.Context) error {
 	return c.JSON(http.StatusOK, s)
 }
 
-// e.GET("/sprints/:id", GetSprint)
-func (sc SprintController) GetSprint(c echo.Context) error {
+// GetSprint e.GET("/sprints/:id", GetSprint)
+func (sc Controller) GetSprint(c echo.Context) error {
 	id := c.Param("id")
 
 	// Verify id is ObjectId
@@ -68,8 +70,8 @@ func (sc SprintController) GetSprint(c echo.Context) error {
 	return c.JSON(http.StatusOK, s)
 }
 
-// e.DELETE("/sprints/:id", RemoveSprint)
-func (sc SprintController) RemoveSprint(c echo.Context) error {
+// UpdateSprint e.update("/sprints/:id", UpdateSprint)
+func (sc Controller) UpdateSprint(c echo.Context) error {
 
 	id := c.Param("id")
 
@@ -82,7 +84,36 @@ func (sc SprintController) RemoveSprint(c echo.Context) error {
 	// Grab id
 	oid := bson.ObjectIdHex(id)
 
-	// Remove user
+	// Updated sprint
+	s := new(models.Sprint)
+	// Bind
+	if err := c.Bind(s); err != nil {
+		return err
+	}
+
+	// Update sprint
+	if err := sc.session.DB("screandb").C("sprints").UpdateId(oid, s); err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, s)
+}
+
+// RemoveSprint e.DELETE("/sprints/:id", RemoveSprint)
+func (sc Controller) RemoveSprint(c echo.Context) error {
+
+	id := c.Param("id")
+
+	// Verify id is ObjectId
+	if !bson.IsObjectIdHex(id) {
+		// TODO : Error handler
+		return c.String(http.StatusBadRequest, "Not a valid Id")
+	}
+
+	// Grab id
+	oid := bson.ObjectIdHex(id)
+
+	// Remove sprint
 	if err := sc.session.DB("screandb").C("sprints").RemoveId(oid); err != nil {
 		return err
 	}

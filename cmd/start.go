@@ -11,7 +11,7 @@ var port int
 var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start server",
-	Long: `Start command to launch server`,
+	Long:  `Start command to launch server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		server.Start(port)
 	},
