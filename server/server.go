@@ -25,6 +25,7 @@ func Start(port int) {
 	e.POST("/sprints", sc.CreateSprint)
 	e.GET("/sprints", sc.GetSprints)
 	e.GET("/sprints/:id", sc.GetSprint)
+	e.DELETE("/sprints/:id", sc.RemoveSprint)
 
 	// start echo server
 	e.Logger.Fatal(e.Start(":" + strconv.Itoa(port)))
