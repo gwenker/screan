@@ -4,3 +4,5 @@ import:
   version: v3.0.2
 - package: github.com/labstack/gommon
   version: v0.1.0
+- package: github.com/dgrijalva/jwt-go
+  version: v3.0.0

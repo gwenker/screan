@@ -7,12 +7,18 @@ import (
 
 	"github.com/gwenker/screan/server/sprint"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 // Start Start server
 func Start(port int) {
 	e := echo.New()
 	e.Debug = true
+
+	// FIXME
+	// CORS default
+	// Allows requests from any origin wth GET, HEAD, PUT, POST or DELETE method.
+	e.Use(middleware.CORS())
 
 	// Get mongodb session
 	ms := getSession()
