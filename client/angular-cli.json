@@ -18,6 +18,10 @@
       "prefix": "screan",
       "mobile": false,
       "styles": [
+        "../bower_components/bootstrap/dist/css/bootstrap.min.css",
+        "../bower_components/metisMenu/dist/metisMenu.min.css",
+        "../bower_components/morrisjs/morris.css",
+        "../bower_components/font-awesome/css/font-awesome.min.css",
         "styles.css"
       ],
       "scripts": [],
