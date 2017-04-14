@@ -8,7 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { AppComponent } from './app.component';
+import { HomeComponent } from './home.component';
 
 import { SprintService } from './services/sprint.service';
 
@@ -18,7 +18,7 @@ import { reducer } from './store/reducers';
 
 @NgModule({
   declarations: [
-    AppComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +55,6 @@ import { reducer } from './store/reducers';
     EffectsModule.run(SprintEffects)
   ],
   providers: [SprintService],
-  bootstrap: [AppComponent]
+  bootstrap: [HomeComponent]
 })
 export class AppModule { }

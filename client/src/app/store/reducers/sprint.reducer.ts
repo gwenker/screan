@@ -4,26 +4,19 @@ import * as sprintAction from '../actions/sprint.action';
 
 
 export interface State {
-    sprints: { [id: string]: Sprint };
+    sprints: Array<Sprint>;
 };
 
 const initialState: State = {
-    sprints: {}
+    sprints: []
 };
 
 export function reducer(state = initialState, action: sprintAction.Actions): State {
     switch (action.type) {
         // Sprint list success
         case sprintAction.ActionTypes.GET_LIST_SPRINT_SUCCESS: {
-            const sprintsResult = action.payload;
-            const sprintsMap = sprintsResult.reduce((sprints: { [id: string]: Sprint }, sprint: Sprint) => {
-                return Object.assign(sprints, {
-                    [sprint.id]: sprint
-                });
-            }, {});
-
             return {
-                sprints: sprintsMap
+                sprints: action.payload
             };
         }
         default: {

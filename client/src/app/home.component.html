@@ -1,0 +1,15 @@
+<h1>
+  SCREAN
+</h1>
+<div class="sprints">
+  <article *ngFor="let sprint of (sprints$ | async)">
+    <h2>{{sprint.name}}</h2>
+    <p>Start : {{sprint.startDate}}</p>
+    <p>End : {{sprint.endDate}}</p>
+  </article>
+  <article>
+    <button type="button" class="btn btn-lg" aria-label="Add a sprint">
+      <p>+</p>
+    </button>
+  </article>
+</div>
