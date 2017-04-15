@@ -15,10 +15,12 @@ import { SprintService } from './services/sprint.service';
 import { SprintEffects } from './store/effects/sprint.effect';
 
 import { reducer } from './store/reducers';
+import { SprintBoxComponent } from './components/sprint-box/sprint-box.component';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    SprintBoxComponent
   ],
   imports: [
     BrowserModule,
