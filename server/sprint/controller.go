@@ -7,6 +7,7 @@ import (
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
+	"github.com/gwenker/screan/server/clientapi/leankit"
 	"github.com/gwenker/screan/server/models"
 	"github.com/labstack/echo"
 )
@@ -66,6 +67,9 @@ func (sc Controller) GetSprint(c echo.Context) error {
 	if err := sc.session.DB("screandb").C("sprints").FindId(oid).One(&s); err != nil {
 		return err
 	}
+
+	leankit.GetBoard()
+
 	// Return Sprint found
 	return c.JSON(http.StatusOK, s)
 }
