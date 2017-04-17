@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-)
 
-const boardURL = "https://*********.leankit.com/kanban/api/boards/*********"
+	"github.com/gwenker/screan/server/configuration"
+)
 
 // GetBoard call leankit api to get board
 func GetBoard() {
+	var conf configuration.Configuration
+	conf = configuration.GetConfiguration()
+	fmt.Println(conf)
 	// Build the request
-	req, err := http.NewRequest("GET", boardURL, nil)
-	req.SetBasicAuth("*********", "************")
-    req.
+	req, err := http.NewRequest("GET", conf.LeankitBoardURL, nil)
+	req.SetBasicAuth(conf.LeankitUsername, conf.LeankitPassword)
+
 	if err != nil {
 		log.Fatal("NewRequest: ", err)
 		return
