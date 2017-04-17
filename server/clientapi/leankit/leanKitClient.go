@@ -7,20 +7,20 @@ import (
 	"net/http"
 
 	"github.com/gwenker/screan/server/configuration"
+	"github.com/gwenker/screan/server/models"
 )
 
-// GetBoard call leankit api to get board
-func GetBoard() {
+// getBoard call leankit api to get board
+func getBoard(boardID string) BoardResponse {
 	var conf configuration.Configuration
 	conf = configuration.GetConfiguration()
 	fmt.Println(conf)
 	// Build the request
-	req, err := http.NewRequest("GET", conf.LeankitBoardURL, nil)
+	req, err := http.NewRequest("GET", conf.LeankitBoardURL+boardID, nil)
 	req.SetBasicAuth(conf.LeankitUsername, conf.LeankitPassword)
 
 	if err != nil {
 		log.Fatal("NewRequest: ", err)
-		return
 	}
 
 	// For control over HTTP client headers,
@@ -35,7 +35,6 @@ func GetBoard() {
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal("Do: ", err)
-		return
 	}
 
 	// Callers should close resp.Body
@@ -51,5 +50,49 @@ func GetBoard() {
 		log.Println(err)
 	}
 
-	fmt.Println(board)
+	return board
+}
+
+func contains(s []int, e int) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+// GetUserStories to get get user stories from leankit
+func GetUserStories(boardID string, laneName string) []models.UserStory {
+	board := getBoard(boardID)
+
+	var childsLaneID []int
+	var userStories []models.UserStory
+
+	for _, lane := range board.ReplyData[0].Lanes {
+		if lane.Title == laneName {
+			for _, laneChildID := range lane.ChildLaneIds {
+				childsLaneID = append(childsLaneID, laneChildID)
+			}
+		}
+		if contains(childsLaneID, lane.ID) {
+			if len(lane.ChildLaneIds) > 0 {
+				for _, laneChildID := range lane.ChildLaneIds {
+					childsLaneID = append(childsLaneID, laneChildID)
+				}
+			} else {
+				for _, card := range lane.Cards {
+					var userStory models.UserStory
+					userStory.ID = card.ExternalCardID
+					userStory.Name = card.Title
+					userStory.Complexity = card.Size
+					userStory.LeftDaysToDevelop = float64(card.DrillThroughProgressSizeTotal-card.DrillThroughProgressSizeComplete) / 8.0
+					userStory.TotalDaysToDevelop = float64(card.DrillThroughProgressSizeTotal) / 8.0
+					userStories = append(userStories, userStory)
+				}
+			}
+		}
+	}
+
+	return userStories
 }

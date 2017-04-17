@@ -1,5 +1,5 @@
 {
     "LeankitUsername" : "username",
     "LeankitPassword" : "password",
-    "LeankitBoardURL" : "https://*********.leankit.com/kanban/api/boards/*********"
+    "LeankitBoardURL" : "https://*********.leankit.com/kanban/api/boards/"
 }

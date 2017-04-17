@@ -68,7 +68,7 @@ func (sc Controller) GetSprint(c echo.Context) error {
 		return err
 	}
 
-	leankit.GetBoard()
+	s.UserStories = leankit.GetUserStories(s.Stream.BoardID, s.Stream.LaneName)
 
 	// Return Sprint found
 	return c.JSON(http.StatusOK, s)

@@ -5,6 +5,6 @@ import "time"
 // PlannedDay define a planned day
 type PlannedDay struct {
 	Day                time.Time `json:"day" bson:"day"`
-	DayCapacity        int16     `json:"dayCapacity" bson:"dayCapacity"`
-	TheoricalPointToDo int16     `json:"theoricalPointToDo" bson:"theoricalPointToDo"`
+	DayCapacity        float32   `json:"dayCapacity" bson:"dayCapacity"`
+	TheoricalPointToDo float32   `json:"theoricalPointToDo" bson:"theoricalPointToDo"`
 }

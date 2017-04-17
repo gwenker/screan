@@ -4,5 +4,5 @@ package models
 type Stream struct {
 	StreamName string `json:"name" bson:"name"`
 	BoardID    string `json:"boardId" bson:"created"`
-	LaneID     string `json:"laneId" bson:"laneId"`
+	LaneName   string `json:"laneName" bson:"laneName"`
 }
