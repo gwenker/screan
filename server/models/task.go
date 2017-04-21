@@ -1,12 +1,10 @@
 package models
 
-// UserStory is feature to develop in a sprint
-type UserStory struct {
+// Task is a part of a feature to develop in a sprint
+type Task struct {
 	ID                 string  `json:"id"`
 	Name               string  `json:"name"`
-	Complexity         int     `json:"complexity"`
+	Description        string  `json:"description"`
 	TotalDaysToDevelop float64 `json:"totalDaysToDevelop"`
 	LeftDaysToDevelop  float64 `json:"leftDaysToDevelop"`
-	State              string  `json:"state"`
-	Tasks              []Task  `json:"tasks"`
 }

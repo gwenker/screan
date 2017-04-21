@@ -93,7 +93,7 @@ type BoardResponse struct {
 				TotalSizeOfCardsNotStarted                                      int         `json:"TotalSizeOfCardsNotStarted"`
 				TotalSizeOfCardsStarted                                         int         `json:"TotalSizeOfCardsStarted"`
 				TotalSizeOfCardsCompleted                                       int         `json:"TotalSizeOfCardsCompleted"`
-				TotalProgressPercentage                                         int         `json:"TotalProgressPercentage"`
+				TotalProgressPercentage                                         float64     `json:"TotalProgressPercentage"`
 			} `json:"DrillThroughStatistics"`
 			DrillThroughCompletionPercent    interface{}   `json:"DrillThroughCompletionPercent"`
 			DrillThroughProgressTotal        int           `json:"DrillThroughProgressTotal"`
@@ -201,7 +201,7 @@ type BoardResponse struct {
 				HasDrillThroughBoard             bool          `json:"HasDrillThroughBoard"`
 				HasMultipleDrillThroughBoards    bool          `json:"HasMultipleDrillThroughBoards"`
 				DrillThroughStatistics           interface{}   `json:"DrillThroughStatistics"`
-				DrillThroughCompletionPercent    int           `json:"DrillThroughCompletionPercent"`
+				DrillThroughCompletionPercent    float64       `json:"DrillThroughCompletionPercent"`
 				DrillThroughProgressTotal        int           `json:"DrillThroughProgressTotal"`
 				DrillThroughProgressComplete     int           `json:"DrillThroughProgressComplete"`
 				DrillThroughProgressSizeComplete int           `json:"DrillThroughProgressSizeComplete"`
