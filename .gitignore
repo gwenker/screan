@@ -1,3 +1,5 @@
 /vendor
 *.exe
 /server/configuration/conf.json
+
+screan

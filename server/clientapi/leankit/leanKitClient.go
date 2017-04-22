@@ -115,6 +115,7 @@ func GetTaskForUserStories(userStories []models.UserStory, stream models.Stream)
 			var childsLaneID []int
 
 			for _, lane := range boardLeankit.ReplyData[0].Lanes {
+				log.Println(lane.Title)
 				if board.LaneName != "" && lane.Title == board.LaneName {
 					for _, laneChildID := range lane.ChildLaneIds {
 						childsLaneID = append(childsLaneID, laneChildID)
@@ -127,7 +128,7 @@ func GetTaskForUserStories(userStories []models.UserStory, stream models.Stream)
 						}
 					} else {
 						for _, card := range lane.Cards {
-							for _, userStory := range userStories {
+							for idxUs, userStory := range userStories {
 								if userStory.ID == card.ExternalCardID {
 									var task models.Task
 									task.ID = card.ExternalCardID
@@ -141,11 +142,11 @@ func GetTaskForUserStories(userStories []models.UserStory, stream models.Stream)
 									} else {
 										task.TotalDaysToDevelop = f64 / 8.0
 									}
-									userStory.Tasks = append(userStory.Tasks, task)
+
+									userStories[idxUs].Tasks = append(userStories[idxUs].Tasks, task)
 									break
 								}
 							}
-
 						}
 					}
 				}
