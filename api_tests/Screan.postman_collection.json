@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "Screan",
-		"_postman_id": "682a0560-53d6-3423-c05f-e3b2034ab816",
+		"_postman_id": "5d42ddfa-a954-6950-2887-efdd26de66d4",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -39,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Sprint 1\",\n  \"startDate\": \"2016-12-10T00:00:00.000Z\",\n  \"endDate\": \"2016-12-25T00:00:00.000Z\"\n}"
+							"raw": "{\n  \"name\": \"Sprint 1\",\n  \"startDate\": \"2017-02-10T00:00:00.000Z\",\n  \"endDate\": \"2017-12-25T00:00:00.000Z\",\n  \"capacity\": 10,\n  \"stream\" : {\n  \t\"boards\" : [\n  \t\t\t{\n  \t\t\t\t\"id\" : \"360858271\",\n  \t\t\t\t\"laneName\" : \"Sprint Stream Easy Go 1\",\n  \t\t\t\t\"type\" : \"USERSTORIES\"\n  \t\t\t},\n  \t\t\t{\n  \t\t\t\t\"id\" : \"207024956\",\n  \t\t\t\t\"type\" : \"TASKS\"\n  \t\t\t}\n  \t\t]\n  },\n  \"planning\": [\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t},\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t}\n  \t]\n}"
 						},
 						"description": ""
 					},
@@ -66,10 +66,7 @@
 						"url": "http://{{uri}}/sprints",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -91,10 +88,7 @@
 						"url": "http://{{uri}}/sprints/{{id}}",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -150,8 +144,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": \"{{id}}\",\n  \"name\": \"Sprint 1\",\n  \"startDate\": \"2016-12-10T00:00:00.000Z\",\n  \"endDate\": \"2016-12-25T00:00:00.000Z\",\n  \"capacity\": 10\n  \"planning\": [\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t},\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t}\n  \t]\n}"
+							"raw": "{\n  \"id\": \"{{id}}\",\n  \"name\": \"Sprint 1\",\n  \"startDate\": \"2016-12-10T00:00:00.000Z\",\n  \"endDate\": \"2016-12-25T00:00:00.000Z\",\n  \"capacity\": 10,\n  \"planning\": [\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t},\n  \t{\n  \t\t\"day\" : \"2016-12-10T00:00:00.000Z\",\n  \t\t\"dayCapacity\" : 4.75,\n  \t\t\"theoricalPointToDo\" : 1\n  \t}\n  \t]\n}"
 						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Board",
+					"request": {
+						"url": "https://*****.leankit.com/kanban/api/boards/207024956",
+						"method": "GET",
+						"header": [],
+						"body": {},
 						"description": ""
 					},
 					"response": []

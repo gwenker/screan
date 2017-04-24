@@ -114,6 +114,44 @@ func GetTaskForUserStories(userStories []models.UserStory, stream models.Stream)
 
 			var childsLaneID []int
 
+			for _, lane := range boardLeankit.ReplyData[0].Backlog {
+				log.Println(lane.Title)
+				if board.LaneName != "" && lane.Title == board.LaneName {
+					for _, laneChildID := range lane.ChildLaneIds {
+						childsLaneID = append(childsLaneID, laneChildID)
+					}
+				}
+				if contains(childsLaneID, lane.ID) || board.LaneName == "" {
+					if len(lane.ChildLaneIds) > 0 {
+						for _, laneChildID := range lane.ChildLaneIds {
+							childsLaneID = append(childsLaneID, laneChildID)
+						}
+					} else {
+						for _, card := range lane.Cards {
+							for idxUs, userStory := range userStories {
+								if userStory.ID == card.ExternalCardID {
+									var task models.Task
+									task.ID = card.ID
+									task.Name = card.Title
+									task.Description = card.Description
+									task.LeftDaysToDevelop = float64(card.Size) / 8.0
+
+									f64, err := strconv.ParseFloat(card.Tags, 64)
+									if err != nil {
+										log.Println("Impossible to parse tag", card.Tags, err)
+									} else {
+										task.TotalDaysToDevelop = f64 / 8.0
+									}
+
+									userStories[idxUs].Tasks = append(userStories[idxUs].Tasks, task)
+									break
+								}
+							}
+						}
+					}
+				}
+			}
+
 			for _, lane := range boardLeankit.ReplyData[0].Lanes {
 				log.Println(lane.Title)
 				if board.LaneName != "" && lane.Title == board.LaneName {
@@ -131,7 +169,7 @@ func GetTaskForUserStories(userStories []models.UserStory, stream models.Stream)
 							for idxUs, userStory := range userStories {
 								if userStory.ID == card.ExternalCardID {
 									var task models.Task
-									task.ID = card.ExternalCardID
+									task.ID = card.ID
 									task.Name = card.Title
 									task.Description = card.Description
 									task.LeftDaysToDevelop = float64(card.Size) / 8.0
