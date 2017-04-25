@@ -2,30 +2,55 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { HomeComponent } from './home.component';
-
 import { SprintService } from './services/sprint.service';
 
 import { SprintEffects } from './store/effects/sprint.effect';
 
 import { reducer } from './store/reducers';
+
+// Pages
+import { ScreanComponent } from './screan/screan.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AddASprintComponent } from './pages/add-a-sprint/add-a-sprint.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+// Components
 import { SprintBoxComponent } from './components/sprint-box/sprint-box.component';
+
+/**
+ * Application routes
+ */
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'add-a-sprint', component: AddASprintComponent },
+  { path: '**', component: NotFoundComponent }
+];
 
 @NgModule({
   declarations: [
     HomeComponent,
-    SprintBoxComponent
+    SprintBoxComponent,
+    AddASprintComponent,
+    ScreanComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    
+    /**
+     * Routing
+     */
+    RouterModule.forRoot(routes),
 
     /**
      * StoreModule.provideStore is imported once in the root module, accepting a reducer
@@ -57,6 +82,6 @@ import { SprintBoxComponent } from './components/sprint-box/sprint-box.component
     EffectsModule.run(SprintEffects)
   ],
   providers: [SprintService],
-  bootstrap: [HomeComponent]
+  bootstrap: [ScreanComponent]
 })
 export class AppModule { }

@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import * as fromRoot from './store/reducers';
-import * as sprintActions from './store/actions/sprint.action';
+import * as fromRoot from '../../store/reducers';
+import * as sprintActions from '../../store/actions/sprint.action';
 
-import { Sprint } from './models/sprint';
+import { Sprint } from '../../models/sprint';
 
 @Component({
   selector: 'screan-home',
