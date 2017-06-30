@@ -3,49 +3,39 @@ package server
 import (
 	"strconv"
 
-	mgo "gopkg.in/mgo.v2"
-
-	"github.com/gwenker/screan/server/sprint"
+	"github.com/gwenker/screan/server/controllers"
+	"github.com/gwenker/screan/server/modules/db"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
 // Start Start server
 func Start(port int) {
-	e := echo.New()
-	e.Debug = true
+	engine := echo.New()
+	engine.Debug = true
 
 	// FIXME
 	// CORS default
 	// Allows requests from any origin wth GET, HEAD, PUT, POST or DELETE method.
-	e.Use(middleware.CORS())
+	engine.Use(middleware.CORS())
 
 	// Get mongodb session
-	ms := getSession()
-	defer ms.Close()
+	db.Connect("mongodb://localhost")
+	defer db.Close()
 
 	// Get a SprintController instance
-	sc := sprint.New(ms)
+	sc := controllers.Sprints{}
 
 	// routes
-	e.POST("/sprints", sc.CreateSprint)
-	e.GET("/sprints", sc.GetSprints)
-	e.GET("/sprints/:id", sc.GetSprint)
-	e.PUT("/sprints/:id", sc.UpdateSprint)
-	e.DELETE("/sprints/:id", sc.RemoveSprint)
-
-	// start echo server
-	e.Logger.Fatal(e.Start(":" + strconv.Itoa(port)))
-}
-
-// get mongodb session
-func getSession() *mgo.Session {
-	// Connect to local mongo
-	session, err := mgo.Dial("mongodb://localhost")
-
-	// Check if connection error, is mongo running?
-	if err != nil {
-		panic(err)
+	sprints := engine.Group("/sprints")
+	{
+		sprints.Use(db.Middleware("", ""))
+		sprints.POST("", sc.CreateSprint)
+		sprints.GET("", sc.GetSprints)
+		sprints.GET("/:id", sc.GetSprint)
+		sprints.PUT("/:id", sc.UpdateSprint)
+		sprints.DELETE("/:id", sc.RemoveSprint)
 	}
-	return session
+	// start echo server
+	engine.Logger.Fatal(engine.Start(":" + strconv.Itoa(port)))
 }
