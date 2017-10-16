@@ -7,7 +7,6 @@ import (
 	"github.com/labstack/echo"
 	"gopkg.in/mgo.v2"
 
-	"strings"
 	"time"
 )
 
@@ -40,10 +39,7 @@ func (db *DB) Sprints() models.SprintsRepo {
 
 // Connect connects to mongodb
 func Connect(uri string) {
-	s, _ := mgo.DialWithInfo(&mgo.DialInfo{
-		Addrs:   strings.Split(uri, ","),
-		Timeout: mongoTimeout,
-	})
+	s, _ := mgo.DialWithTimeout(uri, mongoTimeout)
 	s.SetSafe(&mgo.Safe{})
 	session = s
 }
